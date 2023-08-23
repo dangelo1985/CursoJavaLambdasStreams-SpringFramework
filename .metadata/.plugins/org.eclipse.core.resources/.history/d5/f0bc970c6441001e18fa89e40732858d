@@ -1,0 +1,27 @@
+package br.com.scream.principal;
+
+import java.util.Scanner;
+
+import br.com.scream.model.DadosSerie;
+import br.com.scream.service.ConsumoApi;
+import br.com.scream.service.ConverterDados;
+
+public class Principal {
+
+	 private Scanner leitura = new Scanner(System.in); 
+	    private ConsumoApi consumo = new ConsumoApi();
+	    private ConverterDados conversor = new ConverterDados();
+	    
+	    private final String ENDERECO = "https://www.omdbapi.com/?t=";
+	    private final String API_KEY = "&apikey=6585022c";
+
+	public void exibMenu() {
+		System.out.println("Digite o nome da série para a busca");
+        var nomeSerie = leitura.nextLine();
+        var json = consumo.obterDados(ENDERECO + nomeSerie.replace("", "+") + API_KEY);
+        DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
+        System.out.println(dados);
+        
+	}
+
+}
